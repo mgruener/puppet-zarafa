@@ -10,10 +10,13 @@ class zarafa::monitor (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file    => $configfile,
-                                                require => Package[$packages],
-                                                notify  => Service['zarafa-monitor']
-                                              })
+  $monitor_options = { 'server_socket-monitor' => { option => 'server_socket',
+                                                    value => "http://${serverhostname}:236/zarafa" }}
+ 
+  create_resources('zarafa::option',merge($monitor_options,$options), { file    => $configfile,
+                                                                        require => Package[$packages],
+                                                                        notify  => Service['zarafa-monitor']
+                                                                      })
 
   service { 'zarafa-monitor':
     ensure  => $ensure,

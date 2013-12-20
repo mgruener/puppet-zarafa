@@ -10,10 +10,13 @@ class zarafa::gateway (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file    => $configfile,
-                                                require => Package[$packages],
-                                                notify  => Service['zarafa-gateway']
-                                              })
+  $gateway_options = { 'server_socket-gateway' => { option => 'server_socket',
+                                                    value => "http://${serverhostname}:236/zarafa" }}
+
+  create_resources('zarafa::option',merge($gateway_options,$options), { file    => $configfile,
+                                                                        require => Package[$packages],
+                                                                        notify  => Service['zarafa-gateway']
+                                                                      })
 
   service { 'zarafa-gateway':
     ensure  => $ensure,

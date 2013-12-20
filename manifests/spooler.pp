@@ -10,10 +10,13 @@ class zarafa::spooler (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file    => $configfile,
-                                                require => Package[$packages],
-                                                notify  => Service['zarafa-spooler']
-                                              })
+  $spooler_options = { 'server_socket-spooler' => { option => 'server_socket',
+                                                    value => "http://${serverhostname}:236/zarafa" }}
+
+  create_resources('zarafa::option',merge($spooler_options,$options), { file    => $configfile,
+                                                                        require => Package[$packages],
+                                                                        notify  => Service['zarafa-spooler']
+                                                                      })
 
   service { 'zarafa-spooler':
     ensure => $ensure,

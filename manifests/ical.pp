@@ -10,10 +10,13 @@ class zarafa::ical (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file    => $configfile,
-                                                require => Package[$packages],
-                                                notify  => Service['zarafa-ical']
-                                              })
+  $ical_options = { 'server_socket-ical' => { option => 'server_socket',
+                                              value => "http://${serverhostname}:236/zarafa" }}
+
+  create_resources('zarafa::option',merge($ical_options,$options), { file    => $configfile,
+                                                                     require => Package[$packages],
+                                                                     notify  => Service['zarafa-ical']
+                                                                   })
 
   service { 'zarafa-ical':
     ensure  => $ensure,

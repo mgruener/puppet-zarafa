@@ -10,10 +10,13 @@ class zarafa::dagent (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file    => $configfile, 
-                                                require => Package[$packages],
-                                                notify  => Service['zarafa-dagent']
-                                              })
+  $dagent_options = { 'server_socket-dagent' => { option => 'server_socket',
+                                                  value => "http://${serverhostname}:236/zarafa" }}
+
+  create_resources('zarafa::option',merge($dagent_options,$options), { file    => $configfile, 
+                                                                       require => Package[$packages],
+                                                                       notify  => Service['zarafa-dagent']
+                                                                     })
 
   service { 'zarafa-dagent':
     ensure  => $ensure,

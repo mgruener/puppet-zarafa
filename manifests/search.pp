@@ -23,10 +23,13 @@ class zarafa::search (
     $search_enabled = 'no'
   }
 
-  create_resources('zarafa::option',$options, { file    => $configfile,
-                                                require => Package[$packages],
-                                                notify  => Service['zarafa-search']
-                                              })
+  $search_options = { 'server_socket-search' => { option => 'server_socket',
+                                                  value => "http://${serverhostname}:236/zarafa" }}
+
+  create_resources('zarafa::option',merge($search_options,$options), { file    => $configfile,
+                                                                       require => Package[$packages],
+                                                                       notify  => Service['zarafa-search']
+                                                                     })
 
   zarafa::option { 'search_enabled':
     file   => '/etc/zarafa/server.cfg',
