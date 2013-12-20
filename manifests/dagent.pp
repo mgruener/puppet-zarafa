@@ -10,7 +10,10 @@ class zarafa::dagent (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file => $configfile, require => Package[$packages] })
+  create_resources('zarafa::option',$options, { file    => $configfile, 
+                                                require => Package[$packages],
+                                                notify  => Service['zarafa-dagent']
+                                              })
 
   service { 'zarafa-dagent':
     ensure  => $ensure,

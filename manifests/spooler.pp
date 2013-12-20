@@ -10,7 +10,10 @@ class zarafa::spooler (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file => $configfile, require => Package[$packages] })
+  create_resources('zarafa::option',$options, { file    => $configfile,
+                                                require => Package[$packages],
+                                                notify  => Service['zarafa-spooler']
+                                              })
 
   service { 'zarafa-spooler':
     ensure => $ensure,

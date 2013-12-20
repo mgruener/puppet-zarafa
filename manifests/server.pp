@@ -42,7 +42,10 @@ class zarafa::server (
                         value => $mysqlpassword
                       },
                     }
-  create_resources('zarafa::option',merge($server_options,$options), { file => $configfile, require => Package[$packages] })
+  create_resources('zarafa::option',merge($server_options,$options), { file    => $configfile,
+                                                                       require => Package[$packages],
+                                                                       notify  => Service['zarafa-server']
+                                                                     })
 
   service { 'zarafa-server':
     ensure => $ensure,

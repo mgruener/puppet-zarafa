@@ -10,7 +10,10 @@ class zarafa::monitor (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file => $configfile, require => Package[$packages] })
+  create_resources('zarafa::option',$options, { file    => $configfile,
+                                                require => Package[$packages],
+                                                notify  => Service['zarafa-monitor']
+                                              })
 
   service { 'zarafa-monitor':
     ensure  => $ensure,

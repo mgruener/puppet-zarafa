@@ -23,7 +23,10 @@ class zarafa::search (
     $search_enabled = 'no'
   }
 
-  create_resources('zarafa::option',$options, { file => $configfile, require => Package[$packages] })
+  create_resources('zarafa::option',$options, { file    => $configfile,
+                                                require => Package[$packages],
+                                                notify  => Service['zarafa-search']
+                                              })
 
   zarafa::option { 'search_enabled':
     file   => '/etc/zarafa/server.cfg',

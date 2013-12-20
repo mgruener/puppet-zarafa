@@ -10,7 +10,10 @@ class zarafa::ical (
     ensure => present
   }
 
-  create_resources('zarafa::option',$options, { file => $configfile, require => Package[$packages] })
+  create_resources('zarafa::option',$options, { file    => $configfile,
+                                                require => Package[$packages],
+                                                notify  => Service['zarafa-ical']
+                                              })
 
   service { 'zarafa-ical':
     ensure  => $ensure,
