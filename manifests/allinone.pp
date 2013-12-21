@@ -22,9 +22,9 @@ class zarafa::allinone (
   Class['zarafa::component::server'] -> Class['zarafa::component::monitor']
   Class['zarafa::component::server'] -> Class['zarafa::component::search']
 
-  $certdir   = "/etc/zarafa/ssl"
-  $keydir    = "/etc/pki/tls/private"
-  $pubkeydir = "/etc/zarafa/sslkeys"
+  $certdir   = pick($certdata[certdir],'/etc/zarafa/ssl')
+  $keydir    = pick($certdata[keydir],'/etc/pki/tls/private')
+  $pubkeydir = pick($certdata[pubkeydir],'/etc/zarafa/sslkeys')
 
   Certtool::Cert {
     certpath        => $certdir,
