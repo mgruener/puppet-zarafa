@@ -1,8 +1,8 @@
 class zarafa::dbhost (
-  $serverhostname = hiera('zarafa::server::hostname','localhost'),
-  $mysqluser      = hiera('zarafa::server::mysqluser','zarafa'),
-  $mysqlpassword  = hiera('zarafa::server::mysqlpassword'),
-  $mysqldb        = hiera('zarafa::server::mysqlmysqldb','zarafa'),
+  $serverhostname = hiera("${module_name}::server::hostname",'localhost'),
+  $mysqluser      = hiera("${module_name}::dbhost::mysqluser",'zarafa'),
+  $mysqlpassword  = hiera("${module_name}::dbhost::mysqlpassword"),
+  $mysqldb        = hiera("${module_name}::dbhost::mysqldb",'zarafa'),
 ) {
   include profile::mysqlserver
   include profile::mysqlclient
@@ -12,5 +12,4 @@ class zarafa::dbhost (
     password => $mysqlpassword,
     host     => $serverhostname
   }
-
 }
