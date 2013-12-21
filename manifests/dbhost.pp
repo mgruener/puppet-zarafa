@@ -4,8 +4,6 @@ class zarafa::dbhost (
   $mysqlpassword  = hiera("${module_name}::dbhost::mysqlpassword"),
   $mysqldb        = hiera("${module_name}::dbhost::mysqldb",'zarafa'),
 ) {
-  include profile::mysqlserver
-  include profile::mysqlclient
 
   mysql::db { $mysqldb:
     user     => $mysqluser,
