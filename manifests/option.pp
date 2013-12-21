@@ -8,6 +8,6 @@ define zarafa::option (
     incl    => $file,
     lens    => 'Zarafa.lns',
     changes => "set ${option} '${value}'",
-    require => File["${zarafa::augeas_lensdir}/zarafa.aug"]
+    require => Class["${module_name}::augeas"]
   }
 }
