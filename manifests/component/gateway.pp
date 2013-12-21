@@ -7,6 +7,9 @@ class zarafa::component::gateway (
   $options        = hiera_hash("${module_name}::component::gateway::options",{}),
   $configfile     = hiera("${module_name}::component::gateway::configfile",'/etc/zarafa/gateway.cfg')
 ) {
+
+  include zarafa::augeas
+
   package { $packages:
     ensure => present
   }

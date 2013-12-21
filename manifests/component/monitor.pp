@@ -7,6 +7,9 @@ class zarafa::component::monitor (
   $options        = hiera_hash("${module_name}::component::monitor::options",{}),
   $configfile     = hiera("${module_name}::component::monitor::configfile",'/etc/zarafa/monitor.cfg')
 ) {
+
+  include zarafa::augeas
+
   package { $packages:
     ensure => present
   }

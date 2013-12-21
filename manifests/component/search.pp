@@ -7,6 +7,9 @@ class zarafa::component::search (
   $options        = hiera_hash("${module_name}::component::search::options",{}),
   $configfile     = hiera("${module_name}::component::search::configfile",'/etc/zarafa/search.cfg')
 ) {
+
+  include zarafa::augeas
+
   package { $packages:
     ensure => present
   }

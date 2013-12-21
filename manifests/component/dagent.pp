@@ -7,6 +7,9 @@ class zarafa::component::dagent (
   $options        = hiera_hash("${module_name}::component::dagent::options",{}),
   $configfile     = hiera("${module_name}::component::dagent::configfile",'/etc/zarafa/dagent.cfg')
 ) {
+
+  include zarafa::augeas
+
   package { $packages:
     ensure => present
   }

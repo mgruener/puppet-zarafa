@@ -14,6 +14,8 @@ class zarafa::component::server (
   $configfile     = hiera("${module_name}::component::server::configfile",'/etc/zarafa/server.cfg')
 ) {
 
+  include zarafa::augeas
+
   package { $packages:
     ensure => present
   }

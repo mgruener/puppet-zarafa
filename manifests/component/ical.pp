@@ -7,6 +7,9 @@ class zarafa::component::ical (
   $options        = hiera_hash("${module_name}::component::ical::options",{}),
   $configfile     = hiera("${module_name}::component::ical::configfile",'/etc/zarafa/ical.cfg')
 ) {
+
+  include zarafa::augeas
+
   package { $packages:
     ensure => present
   }

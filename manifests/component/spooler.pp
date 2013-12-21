@@ -7,6 +7,9 @@ class zarafa::component::spooler (
   $options        = hiera_hash("${module_name}::component::spooler::options",{}),
   $configfile     = hiera("${module_name}::component::spooler::configfile",'/etc/zarafa/spooler.cfg')
 ) {
+
+  include zarafa::augeas
+
   package { $packages:
     ensure => present
   }
