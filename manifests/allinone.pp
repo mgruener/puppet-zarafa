@@ -1,8 +1,8 @@
-class profile::zarafa_allinone (
+class zarafa::allinone (
   $serverhostname = hiera('zarafa::server::hostname',$::fqdn),
-  $certdata       = hiera_hash("${module_name}::zarafa_allinone::certdata"),
+  $certdata       = hiera_hash("${module_name}::zarafa::allinone::certdata"),
 ) {
-  include profile::zarafa_dbhost
+  include zarafa::dbhost
   include certtool
   include zarafa
   include zarafa::component::client
@@ -15,7 +15,7 @@ class profile::zarafa_allinone (
   include zarafa::component::search
   include zarafa::component::webaccess
 
-  Class['profile::zarafa_dbhost'] -> Class['zarafa::component::server'] 
+  Class['zarafa::dbhost'] -> Class['zarafa::component::server'] 
   Class['zarafa::component::server'] -> Class['zarafa::component::dagent']
   Class['zarafa::component::server'] -> Class['zarafa::component::spooler']
   Class['zarafa::component::server'] -> Class['zarafa::component::gateway']

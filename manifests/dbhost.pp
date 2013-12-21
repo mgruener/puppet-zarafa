@@ -1,4 +1,4 @@
-class profile::zarafa_dbhost (
+class zarafa::dbhost (
   $serverhostname = hiera('zarafa::server::hostname','localhost'),
   $mysqluser      = hiera('zarafa::server::mysqluser','zarafa'),
   $mysqlpassword  = hiera('zarafa::server::mysqlpassword'),
