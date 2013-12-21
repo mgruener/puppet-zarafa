@@ -1,11 +1,11 @@
-class zarafa::spooler (
-  $ensure         = hiera("${module_name}::spooler::ensure",running),
-  $enable         = hiera("${module_name}::spooler::enable",true),
-  $packages       = hiera("${module_name}::spooler::packages",'zarafa-spooler'),
-  $serverhostname = hiera("${module_name}::spooler::serverhostname",'localhost'),
-  $sslkeyfile     = hiera("${module_name}::spooler::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-spooler.crt"),
-  $options        = hiera_hash("${module_name}::spooler::options",{}),
-  $configfile     = hiera("${module_name}::spooler::configfile",'/etc/zarafa/spooler.cfg')
+class zarafa::component::spooler (
+  $ensure         = hiera("${module_name}::component::spooler::ensure",running),
+  $enable         = hiera("${module_name}::component::spooler::enable",true),
+  $packages       = hiera("${module_name}::component::spooler::packages",'zarafa-spooler'),
+  $serverhostname = hiera("${module_name}::component::spooler::serverhostname",'localhost'),
+  $sslkeyfile     = hiera("${module_name}::component::spooler::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-spooler.crt"),
+  $options        = hiera_hash("${module_name}::component::spooler::options",{}),
+  $configfile     = hiera("${module_name}::component::spooler::configfile",'/etc/zarafa/spooler.cfg')
 ) {
   package { $packages:
     ensure => present

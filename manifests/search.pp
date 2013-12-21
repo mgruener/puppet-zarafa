@@ -1,11 +1,11 @@
-class zarafa::search (
-  $ensure         = hiera("${module_name}::search::ensure",running),
-  $enable         = hiera("${module_name}::search::enable",true),
-  $packages       = hiera("${module_name}::search::packages",'zarafa-search'),
-  $serverhostname = hiera("${module_name}::search::serverhostname",'localhost'),
-  $sslkeyfile     = hiera("${module_name}::search::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-search.crt"),
-  $options        = hiera_hash("${module_name}::search::options",{}),
-  $configfile     = hiera("${module_name}::search::configfile",'/etc/zarafa/search.cfg')
+class zarafa::component::search (
+  $ensure         = hiera("${module_name}::component::search::ensure",running),
+  $enable         = hiera("${module_name}::component::search::enable",true),
+  $packages       = hiera("${module_name}::component::search::packages",'zarafa-search'),
+  $serverhostname = hiera("${module_name}::component::search::serverhostname",'localhost'),
+  $sslkeyfile     = hiera("${module_name}::component::search::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-search.crt"),
+  $options        = hiera_hash("${module_name}::component::search::options",{}),
+  $configfile     = hiera("${module_name}::component::search::configfile",'/etc/zarafa/search.cfg')
 ) {
   package { $packages:
     ensure => present

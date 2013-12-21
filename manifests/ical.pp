@@ -1,11 +1,11 @@
-class zarafa::ical (
-  $ensure         = hiera("${module_name}::ical::ensure",running),
-  $enable         = hiera("${module_name}::ical::enable",true),
-  $packages       = hiera("${module_name}::ical::packages",'zarafa-ical'),
-  $serverhostname = hiera("${module_name}::ical::serverhostname",'localhost'),
-  $sslkeyfile     = hiera("${module_name}::ical::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-ical.crt"),
-  $options        = hiera_hash("${module_name}::ical::options",{}),
-  $configfile     = hiera("${module_name}::ical::configfile",'/etc/zarafa/ical.cfg')
+class zarafa::component::ical (
+  $ensure         = hiera("${module_name}::component::ical::ensure",running),
+  $enable         = hiera("${module_name}::component::ical::enable",true),
+  $packages       = hiera("${module_name}::component::ical::packages",'zarafa-ical'),
+  $serverhostname = hiera("${module_name}::component::ical::serverhostname",'localhost'),
+  $sslkeyfile     = hiera("${module_name}::component::ical::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-ical.crt"),
+  $options        = hiera_hash("${module_name}::component::ical::options",{}),
+  $configfile     = hiera("${module_name}::component::ical::configfile",'/etc/zarafa/ical.cfg')
 ) {
   package { $packages:
     ensure => present

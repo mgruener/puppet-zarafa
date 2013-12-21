@@ -1,11 +1,11 @@
-class zarafa::dagent (
-  $ensure         = hiera("${module_name}::dagent::ensure",running),
-  $enable         = hiera("${module_name}::dagent::enable",true),
-  $serverhostname = hiera("${module_name}::dagent::serverhostname",'localhost'),
-  $packages       = hiera("${module_name}::dagent::packages",'zarafa-dagent'),
-  $sslkeyfile     = hiera("${module_name}::dagent::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-dagent.crt"),
-  $options        = hiera_hash("${module_name}::dagent::options",{}),
-  $configfile     = hiera("${module_name}::dagent::configfile",'/etc/zarafa/dagent.cfg')
+class zarafa::component::dagent (
+  $ensure         = hiera("${module_name}::component::dagent::ensure",running),
+  $enable         = hiera("${module_name}::component::dagent::enable",true),
+  $serverhostname = hiera("${module_name}::component::dagent::serverhostname",'localhost'),
+  $packages       = hiera("${module_name}::component::dagent::packages",'zarafa-dagent'),
+  $sslkeyfile     = hiera("${module_name}::component::dagent::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-dagent.crt"),
+  $options        = hiera_hash("${module_name}::component::dagent::options",{}),
+  $configfile     = hiera("${module_name}::component::dagent::configfile",'/etc/zarafa/dagent.cfg')
 ) {
   package { $packages:
     ensure => present

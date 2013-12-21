@@ -1,17 +1,17 @@
-class zarafa::server (
-  $ensure         = hiera("${module_name}::server::ensure",running),
-  $enable         = hiera("${module_name}::server::enable",true),
-  $serverhostname = hiera("${module_name}::server::hostname",$::fqdn),
-  $sslcafile      = hiera("${module_name}::server::sslcakeyfile","/etc/zarafa/ssl/ca.crt"),
-  $sslkeyfile     = hiera("${module_name}::server::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
-  $sslkeysdir     = hiera("${module_name}::server::sslkeysdir","/etc/zarafa/sslkeys"),
-  $mysqluser      = hiera("${module_name}::server::mysqluser",'zarafa'),
-  $mysqlpassword  = hiera("${module_name}::server::mysqlpassword"),
-  $mysqldb        = hiera("${module_name}::server::mysqlmysqldb",'zarafa'),
-  $mysqlhost      = hiera("${module_name}::server::mysqlhost",'localhost'),
-  $packages       = hiera("${module_name}::server::packages",'zarafa-server'),
-  $options        = hiera_hash("${module_name}::server::options",{}),
-  $configfile     = hiera("${module_name}::server::configfile",'/etc/zarafa/server.cfg')
+class zarafa::component::server (
+  $ensure         = hiera("${module_name}::component::server::ensure",running),
+  $enable         = hiera("${module_name}::component::server::enable",true),
+  $serverhostname = hiera("${module_name}::component::server::hostname",$::fqdn),
+  $sslcafile      = hiera("${module_name}::component::server::sslcakeyfile","/etc/zarafa/ssl/ca.crt"),
+  $sslkeyfile     = hiera("${module_name}::component::server::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
+  $sslkeysdir     = hiera("${module_name}::component::server::sslkeysdir","/etc/zarafa/sslkeys"),
+  $mysqluser      = hiera("${module_name}::component::server::mysqluser",'zarafa'),
+  $mysqlpassword  = hiera("${module_name}::component::server::mysqlpassword"),
+  $mysqldb        = hiera("${module_name}::component::server::mysqlmysqldb",'zarafa'),
+  $mysqlhost      = hiera("${module_name}::component::server::mysqlhost",'localhost'),
+  $packages       = hiera("${module_name}::component::server::packages",'zarafa-server'),
+  $options        = hiera_hash("${module_name}::component::server::options",{}),
+  $configfile     = hiera("${module_name}::component::server::configfile",'/etc/zarafa/server.cfg')
 ) {
 
   package { $packages:

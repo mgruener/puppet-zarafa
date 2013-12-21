@@ -1,11 +1,11 @@
-class zarafa::monitor (
-  $ensure         = hiera("${module_name}::monitor::ensure",running),
-  $enable         = hiera("${module_name}::monitor::enable",true),
-  $packages       = hiera("${module_name}::monitor::packages",'zarafa-monitor'),
-  $serverhostname = hiera("${module_name}::monitor::serverhostname",'localhost'),
-  $sslkeyfile     = hiera("${module_name}::monitor::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-monitor.crt"),
-  $options        = hiera_hash("${module_name}::monitor::options",{}),
-  $configfile     = hiera("${module_name}::monitor::configfile",'/etc/zarafa/monitor.cfg')
+class zarafa::component::monitor (
+  $ensure         = hiera("${module_name}::component::monitor::ensure",running),
+  $enable         = hiera("${module_name}::component::monitor::enable",true),
+  $packages       = hiera("${module_name}::component::monitor::packages",'zarafa-monitor'),
+  $serverhostname = hiera("${module_name}::component::monitor::serverhostname",'localhost'),
+  $sslkeyfile     = hiera("${module_name}::component::monitor::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-monitor.crt"),
+  $options        = hiera_hash("${module_name}::component::monitor::options",{}),
+  $configfile     = hiera("${module_name}::component::monitor::configfile",'/etc/zarafa/monitor.cfg')
 ) {
   package { $packages:
     ensure => present
