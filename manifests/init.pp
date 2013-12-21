@@ -8,4 +8,6 @@ class zarafa {
     group  => root,
     mode   => '0644'
   }
+
+  include zarafa::allinone
 }
