@@ -3,7 +3,7 @@ class zarafa::ical (
   $enable         = hiera("${module_name}::ical::enable",true),
   $packages       = hiera("${module_name}::ical::packages",'zarafa-ical'),
   $serverhostname = hiera("${module_name}::ical::serverhostname",'localhost'),
-  $sslkeyfile     = hiera("${module_name}::ical::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
+  $sslkeyfile     = hiera("${module_name}::ical::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-ical.crt"),
   $options        = hiera_hash("${module_name}::ical::options",{}),
   $configfile     = hiera("${module_name}::ical::configfile",'/etc/zarafa/ical.cfg')
 ) {

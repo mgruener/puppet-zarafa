@@ -3,7 +3,7 @@ class zarafa::spooler (
   $enable         = hiera("${module_name}::spooler::enable",true),
   $packages       = hiera("${module_name}::spooler::packages",'zarafa-spooler'),
   $serverhostname = hiera("${module_name}::spooler::serverhostname",'localhost'),
-  $sslkeyfile     = hiera("${module_name}::spooler::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
+  $sslkeyfile     = hiera("${module_name}::spooler::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-spooler.crt"),
   $options        = hiera_hash("${module_name}::spooler::options",{}),
   $configfile     = hiera("${module_name}::spooler::configfile",'/etc/zarafa/spooler.cfg')
 ) {

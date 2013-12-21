@@ -3,7 +3,7 @@ class zarafa::monitor (
   $enable         = hiera("${module_name}::monitor::enable",true),
   $packages       = hiera("${module_name}::monitor::packages",'zarafa-monitor'),
   $serverhostname = hiera("${module_name}::monitor::serverhostname",'localhost'),
-  $sslkeyfile     = hiera("${module_name}::monitor::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
+  $sslkeyfile     = hiera("${module_name}::monitor::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-monitor.crt"),
   $options        = hiera_hash("${module_name}::monitor::options",{}),
   $configfile     = hiera("${module_name}::monitor::configfile",'/etc/zarafa/monitor.cfg')
 ) {

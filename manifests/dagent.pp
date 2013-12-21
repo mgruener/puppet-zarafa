@@ -3,7 +3,7 @@ class zarafa::dagent (
   $enable         = hiera("${module_name}::dagent::enable",true),
   $serverhostname = hiera("${module_name}::dagent::serverhostname",'localhost'),
   $packages       = hiera("${module_name}::dagent::packages",'zarafa-dagent'),
-  $sslkeyfile     = hiera("${module_name}::dagent::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
+  $sslkeyfile     = hiera("${module_name}::dagent::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-dagent.crt"),
   $options        = hiera_hash("${module_name}::dagent::options",{}),
   $configfile     = hiera("${module_name}::dagent::configfile",'/etc/zarafa/dagent.cfg')
 ) {

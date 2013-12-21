@@ -3,7 +3,7 @@ class zarafa::search (
   $enable         = hiera("${module_name}::search::enable",true),
   $packages       = hiera("${module_name}::search::packages",'zarafa-search'),
   $serverhostname = hiera("${module_name}::search::serverhostname",'localhost'),
-  $sslkeyfile     = hiera("${module_name}::search::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
+  $sslkeyfile     = hiera("${module_name}::search::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-search.crt"),
   $options        = hiera_hash("${module_name}::search::options",{}),
   $configfile     = hiera("${module_name}::search::configfile",'/etc/zarafa/search.cfg')
 ) {
