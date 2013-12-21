@@ -1,4 +1,8 @@
-define zarafa::option ( $file, $option = $title, $value ) {
+define zarafa::option (
+  $option = $title,
+  $value,
+  $file
+) {
   augeas { "zarafa-${file}-${title}":
     context => "/files${file}",
     incl    => $file,
