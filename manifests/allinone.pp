@@ -3,7 +3,6 @@ class zarafa::allinone (
   $certdata       = hiera_hash("${module_name}::allinone::certdata"),
 ) {
   include zarafa::dbhost
-  include certtool
   include zarafa::component::client
   include zarafa::component::server
   include zarafa::component::dagent
