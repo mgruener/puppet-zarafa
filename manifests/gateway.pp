@@ -11,7 +11,15 @@ class zarafa::gateway (
   }
 
   $gateway_options = { 'server_socket-gateway' => { option => 'server_socket',
-                                                    value => "http://${serverhostname}:236/zarafa" }}
+                                                    value => "https://${serverhostname}:237/zarafa"
+                       },
+                       'ssl_private_key_file-gateway'   => { option => 'ssl_private_key_file',
+                                                             value  => $sslkeyfile
+                       },
+                       'ssl_certificate_file-gateway'   => { option => 'ssl_certificate_file',
+                                                             value  => $sslkeyfile
+                       }
+  }
 
   create_resources('zarafa::option',merge($gateway_options,$options), { file    => $configfile,
                                                                         require => Package[$packages],

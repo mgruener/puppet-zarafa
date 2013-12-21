@@ -2,8 +2,9 @@ class zarafa::server (
   $ensure         = hiera("${module_name}::server::ensure",running),
   $enable         = hiera("${module_name}::server::enable",true),
   $serverhostname = hiera("${module_name}::server::hostname",$::fqdn),
-  $sslcafile      = hiera("${module_name}::server::sslkeyfile","/etc/pki/tls/certs/ca.crt"),
-  $sslkeyfile     = hiera("${module_name}::server::sslkeyfile","/etc/pki/tls/certs/${::fqdn}.crt"),
+  $sslcafile      = hiera("${module_name}::server::sslcakeyfile","/etc/zarafa/ssl/ca.crt"),
+  $sslkeyfile     = hiera("${module_name}::server::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
+  $sslkeysdir     = hiera("${module_name}::server::sslkeysdir","/etc/zarafa/sslkeys"),
   $mysqluser      = hiera("${module_name}::server::mysqluser",'zarafa'),
   $mysqlpassword  = hiera("${module_name}::server::mysqlpassword"),
   $mysqldb        = hiera("${module_name}::server::mysqlmysqldb",'zarafa'),
@@ -28,6 +29,9 @@ class zarafa::server (
                       },
                       'server_ssl_ca_file' => {
                         value => $sslcafile
+                      },
+                      'sslkeys_path' => {
+                        value => $sslkeysdir
                       },
                       'mysql_host'     => {
                         value => $mysqlhost

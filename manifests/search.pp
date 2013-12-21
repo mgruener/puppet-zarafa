@@ -3,6 +3,7 @@ class zarafa::search (
   $enable         = hiera("${module_name}::search::enable",true),
   $packages       = hiera("${module_name}::search::packages",'zarafa-search'),
   $serverhostname = hiera("${module_name}::search::serverhostname",'localhost'),
+  $sslkeyfile     = hiera("${module_name}::search::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
   $options        = hiera_hash("${module_name}::search::options",{}),
   $configfile     = hiera("${module_name}::search::configfile",'/etc/zarafa/search.cfg')
 ) {
@@ -24,7 +25,12 @@ class zarafa::search (
   }
 
   $search_options = { 'server_socket-search' => { option => 'server_socket',
-                                                  value => "http://${serverhostname}:236/zarafa" }}
+                                                  value => "https://${serverhostname}:237/zarafa"
+                      },
+                      'sslkey_file-search'   => { option => 'sslkey_file',
+                                                  value  => $sslkeyfile
+                      }
+  }
 
   create_resources('zarafa::option',merge($search_options,$options), { file    => $configfile,
                                                                        require => Package[$packages],
