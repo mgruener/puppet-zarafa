@@ -17,7 +17,7 @@ class zarafa::component::dagent (
   if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
     $zarafaserver = 'localhost'
   }
-  else
+  else {
     $zarafaserver = $serverhostname
   }
 

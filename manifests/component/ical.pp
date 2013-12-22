@@ -17,7 +17,7 @@ class zarafa::component::ical (
   if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
     $zarafaserver = 'localhost'
   }
-  else
+  else {
     $zarafaserver = $serverhostname
   }
 

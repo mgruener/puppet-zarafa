@@ -17,7 +17,7 @@ class zarafa::component::monitor (
   if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
     $zarafaserver = 'localhost'
   }
-  else
+  else {
     $zarafaserver = $serverhostname
   }
 
