@@ -1,7 +1,7 @@
 class zarafa::component::gateway (
+  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
   $ensure         = hiera("${module_name}::component::gateway::ensure",running),
   $enable         = hiera("${module_name}::component::gateway::enable",true),
-  $serverhostname = hiera("${module_name}::component::gateway::serverhostname",'localhost'),
   $packages       = hiera("${module_name}::component::gateway::packages",'zarafa-gateway'),
   $sslkeyfile     = hiera("${module_name}::component::gateway::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-gateway.crt"),
   $options        = hiera_hash("${module_name}::component::gateway::options",{}),
@@ -14,8 +14,15 @@ class zarafa::component::gateway (
     ensure => present
   }
 
+  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
+    $zarafaserver = 'localhost'
+  }
+  else
+    $zarafaserver = $serverhostname
+  }
+
   $gateway_options = { 'server_socket-gateway' => { option => 'server_socket',
-                                                    value => "https://${serverhostname}:237/zarafa"
+                                                    value => "https://${zarafaserver}:237/zarafa"
                        },
                        'ssl_private_key_file-gateway'   => { option => 'ssl_private_key_file',
                                                              value  => $sslkeyfile

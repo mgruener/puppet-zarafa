@@ -1,7 +1,7 @@
 class zarafa::component::dagent (
+  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
   $ensure         = hiera("${module_name}::component::dagent::ensure",running),
   $enable         = hiera("${module_name}::component::dagent::enable",true),
-  $serverhostname = hiera("${module_name}::component::dagent::serverhostname",'localhost'),
   $packages       = hiera("${module_name}::component::dagent::packages",'zarafa-dagent'),
   $sslkeyfile     = hiera("${module_name}::component::dagent::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-dagent.crt"),
   $options        = hiera_hash("${module_name}::component::dagent::options",{}),
@@ -14,8 +14,15 @@ class zarafa::component::dagent (
     ensure => present
   }
 
+  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
+    $zarafaserver = 'localhost'
+  }
+  else
+    $zarafaserver = $serverhostname
+  }
+
   $dagent_options = { 'server_socket-dagent' => { option => 'server_socket',
-                                                  value => "https://${serverhostname}:237/zarafa"
+                                                  value => "https://${zarafaserver}:237/zarafa"
                      },
                      'sslkey_file-dagent'    => { option => 'sslkey_file',
                                                   value  => $sslkeyfile

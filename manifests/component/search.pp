@@ -1,8 +1,8 @@
 class zarafa::component::search (
+  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
   $ensure         = hiera("${module_name}::component::search::ensure",running),
   $enable         = hiera("${module_name}::component::search::enable",true),
   $packages       = hiera("${module_name}::component::search::packages",'zarafa-search'),
-  $serverhostname = hiera("${module_name}::component::search::serverhostname",'localhost'),
   $sslkeyfile     = hiera("${module_name}::component::search::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-search.crt"),
   $options        = hiera_hash("${module_name}::component::search::options",{}),
   $configfile     = hiera("${module_name}::component::search::configfile",'/etc/zarafa/search.cfg')
@@ -12,6 +12,13 @@ class zarafa::component::search (
 
   package { $packages:
     ensure => present
+  }
+
+  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
+    $zarafaserver = 'localhost'
+  }
+  else
+    $zarafaserver = $serverhostname
   }
 
   service { 'zarafa-search':
@@ -28,7 +35,7 @@ class zarafa::component::search (
   }
 
   $search_options = { 'server_socket-search' => { option => 'server_socket',
-                                                  value => "https://${serverhostname}:237/zarafa"
+                                                  value => "https://${zarafaserver}:237/zarafa"
                       },
                       'sslkey_file-search'   => { option => 'sslkey_file',
                                                   value  => $sslkeyfile
