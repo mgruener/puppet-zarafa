@@ -1,5 +1,5 @@
 class zarafa::allinone (
-  $serverhostname = hiera("${module_name}::server::hostname",$::fqdn),
+  $serverhostname = hiera("${module_name}::component::server::hostname",$::fqdn),
   $certdata       = hiera_hash("${module_name}::allinone::certdata"),
 ) {
   include zarafa::dbhost
