@@ -37,13 +37,13 @@ class zarafa::allinone (
     expiration_days => $certdata[expidation_days]
   }
   
-  file { [ $certdir, $keydir, $pubkeydir ]:
+  file { [ $sslcertdir, $sslkeydir, $sslpubkeydir ]:
     ensure => directory,
   }
 
   certtool::cert { $certdata[caname]:
     is_ca => true,
-    require => [ File[$certdir], File[$keydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir] ]
   }
 
   $usage = [ "tls_www_server",
@@ -63,7 +63,7 @@ class zarafa::allinone (
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
   }
 
   certtool::cert { "${serverhostname}-dagent":
@@ -71,41 +71,41 @@ class zarafa::allinone (
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
   }
   certtool::cert { "${serverhostname}-ical":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
   }
   certtool::cert { "${serverhostname}-gateway":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
   }
   certtool::cert { "${serverhostname}-search":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
   }
   certtool::cert { "${serverhostname}-monitor":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
   }
   certtool::cert { "${serverhostname}-admin":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
   }
 }
