@@ -5,9 +5,16 @@ class zarafa::dbhost (
   $mysqldb        = hiera("${module_name}::dbhost::mysqldb",'zarafa'),
 ) {
 
+  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
+    $zarafaserver = 'localhost'
+  }
+  else {
+    $zarafaserver = $serverhostname
+  }
+
   mysql::db { $mysqldb:
     user     => $mysqluser,
     password => $mysqlpassword,
-    host     => $serverhostname
+    host     => $zarafaserver
   }
 }
