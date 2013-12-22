@@ -1,5 +1,8 @@
 class zarafa::allinone (
   $serverhostname = hiera("${module_name}::component::server::hostname",$::fqdn),
+  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
+  $sslkeydir      = hiera("${module_name}::sslkeydir",'/etc/pki/tls/private'),
+  $sslpubkeydir   = hiera("${module_name}::sslpubkeydir",'/etc/zarafa/sslkeys'),
   $certdata       = hiera_hash("${module_name}::allinone::certdata"),
 ) {
   include zarafa::dbhost
@@ -21,14 +24,10 @@ class zarafa::allinone (
   Class['zarafa::component::server'] -> Class['zarafa::component::monitor']
   Class['zarafa::component::server'] -> Class['zarafa::component::search']
 
-  $certdir   = pick($certdata[certdir],'/etc/zarafa/ssl')
-  $keydir    = pick($certdata[keydir],'/etc/pki/tls/private')
-  $pubkeydir = pick($certdata[pubkeydir],'/etc/zarafa/sslkeys')
-
   Certtool::Cert {
-    certpath        => $certdir,
-    keypath         => $keydir,
-    pubkeypath      => $pubkeydir,
+    certpath        => $sslcertdir,
+    keypath         => $sslkeydir,
+    pubkeypath      => $sslpubkeydir,
     organization    => $certdata[organization],
     unit            => $certdata[unit],
     locality        => $certdata[locality],

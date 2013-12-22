@@ -1,10 +1,11 @@
 class zarafa::component::server (
+  $sslpubkeydir   = hiera("${module_name}::sslpubkeydir","/etc/zarafa/sslkeys"),
+  $sslcertdir     = hiera("${module_name}::sslcertdir","/etc/zarafa/ssl"),
   $ensure         = hiera("${module_name}::component::server::ensure",running),
   $enable         = hiera("${module_name}::component::server::enable",true),
   $serverhostname = hiera("${module_name}::component::server::hostname",$::fqdn),
-  $sslcafile      = hiera("${module_name}::component::server::sslcakeyfile","/etc/zarafa/ssl/ca.crt"),
-  $sslkeyfile     = hiera("${module_name}::component::server::sslkeyfile","/etc/zarafa/ssl/${::fqdn}.crt"),
-  $sslpubkeysdir  = hiera("${module_name}::component::server::sslpubkeysdir","/etc/zarafa/sslkeys"),
+  $sslcafile      = hiera("${module_name}::component::server::sslcakeyfile","ca.crt"),
+  $sslkeyfile     = hiera("${module_name}::component::server::sslkeyfile","${::fqdn}.crt"),
   $mysqluser      = hiera("${module_name}::dbhost::mysqluser",'zarafa'),
   $mysqlpassword  = hiera("${module_name}::dbhost::mysqlpassword"),
   $mysqldb        = hiera("${module_name}::dbhost::mysqldb",'zarafa'),
@@ -27,13 +28,13 @@ class zarafa::component::server (
                         value => 'yes'
                       },
                       'server_ssl_key_file' => {
-                        value => $sslkeyfile
+                        value => "${sslcertdir}/${sslkeyfile}"
                       },
                       'server_ssl_ca_file' => {
-                        value => $sslcafile
+                        value => "${sslcertdir}/${sslcafile}"
                       },
                       'sslkeys_path' => {
-                        value => $sslpubkeysdir
+                        value => $sslpubkeydir
                       },
                       'mysql_host'     => {
                         value => $mysqlhost

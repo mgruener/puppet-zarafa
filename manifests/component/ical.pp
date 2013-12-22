@@ -1,9 +1,10 @@
 class zarafa::component::ical (
+  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
   $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
   $ensure         = hiera("${module_name}::component::ical::ensure",running),
   $enable         = hiera("${module_name}::component::ical::enable",true),
   $packages       = hiera("${module_name}::component::ical::packages",'zarafa-ical'),
-  $sslkeyfile     = hiera("${module_name}::component::ical::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-ical.crt"),
+  $sslkeyfile     = hiera("${module_name}::component::ical::sslkeyfile","${::fqdn}-ical.crt"),
   $options        = hiera_hash("${module_name}::component::ical::options",{}),
   $configfile     = hiera("${module_name}::component::ical::configfile",'/etc/zarafa/ical.cfg')
 ) {
@@ -25,10 +26,10 @@ class zarafa::component::ical (
                                               value => "https://${zarafaserver}:237/zarafa"
                     },
                     'ssl_private_key_file-ical'   => { option => 'ssl_private_key_file',
-                                                       value  => $sslkeyfile
+                                                       value  => "${sslcertdir}/${sslkeyfile}"
                     },
                     'ssl_certificate_file-ical'   => { option => 'ssl_certificate_file',
-                                                       value  => $sslkeyfile
+                                                       value  => "${sslcertdir}/${sslkeyfile}"
                     }
   }
 

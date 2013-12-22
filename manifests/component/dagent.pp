@@ -1,9 +1,10 @@
 class zarafa::component::dagent (
+  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
   $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
   $ensure         = hiera("${module_name}::component::dagent::ensure",running),
   $enable         = hiera("${module_name}::component::dagent::enable",true),
   $packages       = hiera("${module_name}::component::dagent::packages",'zarafa-dagent'),
-  $sslkeyfile     = hiera("${module_name}::component::dagent::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-dagent.crt"),
+  $sslkeyfile     = hiera("${module_name}::component::dagent::sslkeyfile","${::fqdn}-dagent.crt"),
   $options        = hiera_hash("${module_name}::component::dagent::options",{}),
   $configfile     = hiera("${module_name}::component::dagent::configfile",'/etc/zarafa/dagent.cfg')
 ) {
@@ -25,7 +26,7 @@ class zarafa::component::dagent (
                                                   value => "https://${zarafaserver}:237/zarafa"
                      },
                      'sslkey_file-dagent'    => { option => 'sslkey_file',
-                                                  value  => $sslkeyfile
+                                                  value  => "${sslcertdir}/${sslkeyfile}"
                      }
   }
 

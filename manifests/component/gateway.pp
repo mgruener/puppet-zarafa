@@ -1,9 +1,10 @@
 class zarafa::component::gateway (
+  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
   $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
   $ensure         = hiera("${module_name}::component::gateway::ensure",running),
   $enable         = hiera("${module_name}::component::gateway::enable",true),
   $packages       = hiera("${module_name}::component::gateway::packages",'zarafa-gateway'),
-  $sslkeyfile     = hiera("${module_name}::component::gateway::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-gateway.crt"),
+  $sslkeyfile     = hiera("${module_name}::component::gateway::sslkeyfile","${::fqdn}-gateway.crt"),
   $options        = hiera_hash("${module_name}::component::gateway::options",{}),
   $configfile     = hiera("${module_name}::component::gateway::configfile",'/etc/zarafa/gateway.cfg')
 ) {
@@ -25,10 +26,10 @@ class zarafa::component::gateway (
                                                     value => "https://${zarafaserver}:237/zarafa"
                        },
                        'ssl_private_key_file-gateway'   => { option => 'ssl_private_key_file',
-                                                             value  => $sslkeyfile
+                                                             value  => "${sslcertdir}/${sslkeyfile}"
                        },
                        'ssl_certificate_file-gateway'   => { option => 'ssl_certificate_file',
-                                                             value  => $sslkeyfile
+                                                             value  => "${sslcertdir}/${sslkeyfile}"
                        }
   }
 
