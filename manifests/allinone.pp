@@ -102,4 +102,11 @@ class zarafa::allinone (
     combine_keycert => true,
     require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
   }
+  certtool::cert { "${serverhostname}-admin":
+    usage => $usage,
+    unit => "test",
+    extract_pubkey => true,
+    combine_keycert => true,
+    require => [ File[$certdir], File[$keydir], File[$pubkeydir] ]
+  }
 }
