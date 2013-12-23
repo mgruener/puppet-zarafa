@@ -63,7 +63,8 @@ class zarafa::allinone (
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before => Class['zarafa::component::server']
   }
 
   certtool::cert { "${serverhostname}-dagent":
@@ -71,41 +72,47 @@ class zarafa::allinone (
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before => Class['zarafa::component::dagent']
   }
   certtool::cert { "${serverhostname}-ical":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before => Class['zarafa::component::ical']
   }
   certtool::cert { "${serverhostname}-gateway":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before => Class['zarafa::component::gateway']
   }
   certtool::cert { "${serverhostname}-search":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before => Class['zarafa::component::search']
   }
   certtool::cert { "${serverhostname}-monitor":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before => Class['zarafa::component::monitor']
   }
   certtool::cert { "${serverhostname}-admin":
     usage => $usage,
     unit => "test",
     extract_pubkey => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ]
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before => Class['zarafa::component::client']
   }
 }
