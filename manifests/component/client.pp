@@ -1,7 +1,8 @@
 class zarafa::component::client (
+  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
   $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
   $packages = hiera("${module_name}::component::client::packages",['zarafa-client', 'zarafa-utils']),
-  $sslkeyfile     = hiera("${module_name}::component::client::sslkeyfile","/etc/zarafa/ssl/${::fqdn}-admin.crt"),
+  $sslkeyfile     = hiera("${module_name}::component::client::sslkeyfile","${::fqdn}-admin.crt"),
   $options        = hiera_hash("${module_name}::component::client::options",{}),
   $configfile     = hiera("${module_name}::component::client::configfile",'/etc/zarafa/admin.cfg')
 ) {
@@ -20,7 +21,7 @@ class zarafa::component::client (
                                                   value => "https://${zarafaserver}:237/zarafa"
                       },
                       'sslkey_file-client'    => { option => 'sslkey_file',
-                                                   value  => $sslkeyfile
+                                                   value  => "${sslcertdir}/${sslkeyfile}"
                       }
   }
 
