@@ -1,0 +1,3 @@
+#%PAM-1.0
+auth       required     pam_mapi.so try_first_pass socket=https://<%= @zarafaserver %>:237/zarafa
+account    required     pam_mapi.so
