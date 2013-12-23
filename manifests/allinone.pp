@@ -67,6 +67,14 @@ class zarafa::allinone (
     before => Class['zarafa::component::server']
   }
 
+  certtool::cert { "${serverhostname}-spooler":
+    usage => $usage,
+    unit => "test",
+    extract_pubkey => true,
+    combine_keycert => true,
+    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before => Class['zarafa::component::spooler']
+  }
   certtool::cert { "${serverhostname}-dagent":
     usage => $usage,
     unit => "test",
