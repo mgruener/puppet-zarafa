@@ -88,6 +88,7 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def fullname=(value)
+    zarafaadmin(['-u',@resource[:name],'-f',@resource[:fullname]])
   end
 
   def admin
@@ -99,6 +100,11 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def admin=(value)
+    if value == :true
+      zarafaadmin(['-u',@resource[:name],'-a','yes'])
+    else
+      zarafaadmin(['-u',@resource[:name],'-a','no'])
+    end
   end
 
   def active
@@ -110,6 +116,11 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def active=(value)
+    if value == :true
+      zarafaadmin(['-u',@resource[:name],'-n','no'])
+    else
+      zarafaadmin(['-u',@resource[:name],'-n','yes'])
+    end
   end
 
   def quotaoverride
@@ -121,6 +132,11 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def quotaoverride=(value)
+    if value == :true
+      zarafaadmin(['-u',@resource[:name],'--qo','yes'])
+    else
+      zarafaadmin(['-u',@resource[:name],'--qo','no'])
+    end
   end
 
   def hardquota
@@ -133,6 +149,7 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def hardquota=(value)
+    zarafaadmin(['-u',@resource[:name],'--qh',@resource[:hardquota]])
   end
 
   def softquota
@@ -145,6 +162,7 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def softquota=(value)
+    zarafaadmin(['-u',@resource[:name],'--qs',@resource[:softquota]])
   end
 
   def warnquota
@@ -157,6 +175,7 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def warnquota=(value)
+    zarafaadmin(['-u',@resource[:name],'--qw',@resource[:warnquota]])
   end
 
   def email
@@ -164,6 +183,7 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def email=(value)
+    zarafaadmin(['-u',@resource[:name],'-e',@resource[:email]])
   end
 
 private
