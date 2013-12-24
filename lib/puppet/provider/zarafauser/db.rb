@@ -74,6 +74,19 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def features=(value)
+    oldfeatures = features
+
+    Array(value).each do |feature|
+      if !oldfeatures.include?(feature)
+        zarafaadmin('-u',@resource[:name],'--enable-feature',feature)
+      end
+    end
+
+    Array(oldfeatures).each do |oldfeature|
+      if !value.include?(oldfeature)
+        zarafaadmin('-u',@resource[:name],'--disable-feature',oldfeature)
+      end
+    end
   end
 
   def groups
