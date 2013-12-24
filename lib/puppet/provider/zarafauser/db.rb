@@ -94,6 +94,19 @@ Puppet::Type.type(:zarafauser).provide(:db) do
   end
 
   def groups=(value)
+    oldgroups = groups
+
+    Array(value).each do |group|
+      if !oldgroups.include?(group)
+        zarafaadmin('-b',@resource[:name],'-i',group)
+      end
+    end
+
+    Array(oldgroups).each do |oldgroup|
+      if (!value.include?(oldgroup)) && (!oldgroup.empty?)
+        zarafaadmin('-B',@resource[:name],'-i',oldgroup)
+      end
+    end
   end
 
   def fullname
