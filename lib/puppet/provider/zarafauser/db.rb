@@ -83,7 +83,7 @@ Puppet::Type.type(:zarafauser).provide(:db) do
     end
 
     Array(oldfeatures).each do |oldfeature|
-      if !value.include?(oldfeature)
+      if (!value.include?(oldfeature)) && (!oldfeature.empty?)
         zarafaadmin('-u',@resource[:name],'--disable-feature',oldfeature)
       end
     end
