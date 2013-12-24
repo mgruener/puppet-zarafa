@@ -241,7 +241,7 @@ private
         else
           if foundgroups
             group = line.lstrip.rstrip
-            if group != 'Everyone'
+            if (!group.empty?) && (group != 'Everyone')
               userdetails[:groups] << group
             end
           end
