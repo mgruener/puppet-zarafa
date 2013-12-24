@@ -68,4 +68,10 @@ Puppet::Type.newtype(:zarafauser) do
   newproperty(:email) do
     desc "The email address of the user"
   end
+
+  autorequire(:zarafagroup) do
+    if @parameters[:groups]
+      @parameters[:groups]
+    end
+  end
 end
