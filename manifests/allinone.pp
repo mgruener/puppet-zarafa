@@ -19,13 +19,26 @@ class zarafa::allinone (
   include zarafa::component::search
   include zarafa::component::webaccess
 
-  Class['zarafa::dbhost'] -> Class['zarafa::component::server'] 
+  Class['zarafa::dbhost'] -> Class['zarafa::component::server']
   Class['zarafa::component::server'] -> Class['zarafa::component::dagent']
   Class['zarafa::component::server'] -> Class['zarafa::component::spooler']
   Class['zarafa::component::server'] -> Class['zarafa::component::gateway']
   Class['zarafa::component::server'] -> Class['zarafa::component::ical']
   Class['zarafa::component::server'] -> Class['zarafa::component::monitor']
   Class['zarafa::component::server'] -> Class['zarafa::component::search']
+
+  case type($hiera_merge) {
+    'string': {
+      validate_re($hiera_merge, '^(true|false)$', "${myclass}::hiera_merge may be either 'true' or 'false' and is set to <${hiera_merge}>.")
+      $hiera_merge_real = str2bool($hiera_merge)
+    }
+    'boolean': {
+      $hiera_merge_real = $hiera_merge
+    }
+    default: {
+      fail("${myclass}::hiera_merge type must be true or false.")
+    }
+  }
 
   if !is_hash($certdata) {
       fail("${myclass}::certdata must be a hash.")
@@ -49,91 +62,83 @@ class zarafa::allinone (
     caname          => $certdata_real[caname],
     expiration_days => $certdata_real[expidation_days]
   }
-  
+
   file { [ $sslcertdir, $sslkeydir, $sslpubkeydir ]:
     ensure => directory,
   }
 
   certtool::cert { $certdata_real[caname]:
-    is_ca => true,
+    is_ca   => true,
     require => [ File[$sslcertdir], File[$sslkeydir] ]
   }
 
-  $usage = [ "tls_www_server",
-             "encryption_key",
-             "signing_key",
-             "tls_www_client",
-             "cert_signing_key",
-             "crl_signing_key",
-             "code_signing_key",
-             "ocsp_signing_key",
-             "time_stamping_key",
-             "ipsec_ike_key"
-  ] 
+  $usage = ['tls_www_server',
+            'encryption_key',
+            'signing_key',
+            'tls_www_client',
+            'cert_signing_key',
+            'crl_signing_key',
+            'code_signing_key',
+            'ocsp_signing_key',
+            'time_stamping_key',
+            'ipsec_ike_key'
+  ]
 
   certtool::cert { $serverhostname:
-    usage => $usage,
-    unit => "test",
-    extract_pubkey => true,
+    usage           => $usage,
+    extract_pubkey  => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
-    before => Class['zarafa::component::server']
+    require         => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before          => Class['zarafa::component::server']
   }
 
   certtool::cert { "${serverhostname}-spooler":
-    usage => $usage,
-    unit => "test",
-    extract_pubkey => true,
+    usage           => $usage,
+    extract_pubkey  => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
-    before => Class['zarafa::component::spooler']
+    require         => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before          => Class['zarafa::component::spooler']
   }
   certtool::cert { "${serverhostname}-dagent":
-    usage => $usage,
-    unit => "test",
-    extract_pubkey => true,
+    usage           => $usage,
+    extract_pubkey  => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
-    before => Class['zarafa::component::dagent']
+    require         => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before          => Class['zarafa::component::dagent']
   }
   certtool::cert { "${serverhostname}-ical":
-    usage => $usage,
-    unit => "test",
-    extract_pubkey => true,
+    usage           => $usage,
+    extract_pubkey  => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
-    before => Class['zarafa::component::ical']
+    require         => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before          => Class['zarafa::component::ical']
   }
   certtool::cert { "${serverhostname}-gateway":
-    usage => $usage,
-    unit => "test",
-    extract_pubkey => true,
+    usage           => $usage,
+    extract_pubkey  => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
-    before => Class['zarafa::component::gateway']
+    require         => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before          => Class['zarafa::component::gateway']
   }
   certtool::cert { "${serverhostname}-search":
-    usage => $usage,
-    unit => "test",
-    extract_pubkey => true,
+    usage           => $usage,
+    extract_pubkey  => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
-    before => Class['zarafa::component::search']
+    require         => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before          => Class['zarafa::component::search']
   }
   certtool::cert { "${serverhostname}-monitor":
-    usage => $usage,
-    unit => "test",
-    extract_pubkey => true,
+    usage           => $usage,
+    extract_pubkey  => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
-    before => Class['zarafa::component::monitor']
+    require         => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before          => Class['zarafa::component::monitor']
   }
   certtool::cert { "${serverhostname}-admin":
-    usage => $usage,
-    unit => "test",
-    extract_pubkey => true,
+    usage           => $usage,
+    extract_pubkey  => true,
     combine_keycert => true,
-    require => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
-    before => Class['zarafa::component::client']
+    require         => [ File[$sslcertdir], File[$sslkeydir], File[$sslpubkeydir] ],
+    before          => Class['zarafa::component::client']
   }
 }
