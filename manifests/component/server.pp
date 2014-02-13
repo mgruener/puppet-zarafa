@@ -9,7 +9,7 @@ class zarafa::component::server (
   $mysqluser      = 'zarafa',
   $mysqlpassword, 
   $mysqldb        = 'zarafa',
-  $mysqlhost      = 'localhost'),
+  $mysqlhost      = 'localhost',
   $packages       = 'zarafa-server',
   $options        = {},
   $configfile     = '/etc/zarafa/server.cfg'
