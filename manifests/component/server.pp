@@ -7,7 +7,7 @@ class zarafa::component::server (
   $sslcafile      = "ca.crt",
   $sslkeyfile     = "${::fqdn}.crt",
   $mysqluser      = 'zarafa',
-  $mysqlpassword, 
+  $mysqlpassword  = '',
   $mysqldb        = 'zarafa',
   $mysqlhost      = 'localhost',
   $packages       = 'zarafa-server',

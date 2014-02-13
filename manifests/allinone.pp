@@ -1,6 +1,5 @@
 class zarafa::allinone (
-  $certdata,
-  $serverhostname = $::fqdn,
+  $certdata = {},
   $sslcertdir     = '/etc/zarafa/ssl',
   $sslkeydir      = '/etc/pki/tls/private',
   $sslpubkeydir   = '/etc/zarafa/sslkeys',
@@ -45,10 +44,13 @@ class zarafa::allinone (
   }
 
   if $hiera_merge_real == true {
-    $certdata_real = hiera_hash("${myclass}::certdata",undef)
+    $certdata_real = hiera_hash("${myclass}::certdata",{})
   } else {
     $certdata_real = $certdata
   }
+
+  $serverhostname = pick(getvar("${module_name}::component::server::serverhostname"),$::fqdn)
+  $caname = pick($certdata_real[caname],"${serverhostname}_ca")
 
   Certtool::Cert {
     certpath        => $sslcertdir,
@@ -59,7 +61,7 @@ class zarafa::allinone (
     locality        => $certdata_real[locality],
     state           => $certdata_real[state],
     country         => $certdata_real[country],
-    caname          => $certdata_real[caname],
+    caname          => $caname,
     expiration_days => $certdata_real[expidation_days]
   }
 
@@ -67,7 +69,7 @@ class zarafa::allinone (
     ensure => directory,
   }
 
-  certtool::cert { $certdata_real[caname]:
+  certtool::cert { $caname:
     is_ca   => true,
     require => [ File[$sslcertdir], File[$sslkeydir] ]
   }
