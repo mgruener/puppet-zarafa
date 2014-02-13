@@ -1,10 +1,10 @@
 class zarafa::component::client (
-  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $packages = hiera("${module_name}::component::client::packages",['zarafa-client', 'zarafa-utils']),
-  $sslkeyfile     = hiera("${module_name}::component::client::sslkeyfile","${::fqdn}-admin.crt"),
-  $options        = hiera_hash("${module_name}::component::client::options",{}),
-  $configfile     = hiera("${module_name}::component::client::configfile",'/etc/zarafa/admin.cfg')
+  $sslcertdir     = '/etc/zarafa/ssl',
+  $serverhostname = 'localhost',
+  $packages       = ['zarafa-client', 'zarafa-utils'],
+  $sslkeyfile     = "${::fqdn}-admin.crt",
+  $options        = {},
+  $configfile     = '/etc/zarafa/admin.cfg',
 ) {
   package { $packages:
     ensure => present

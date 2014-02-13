@@ -1,12 +1,12 @@
 class zarafa::component::monitor (
-  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $ensure         = hiera("${module_name}::component::monitor::ensure",running),
-  $enable         = hiera("${module_name}::component::monitor::enable",true),
-  $packages       = hiera("${module_name}::component::monitor::packages",'zarafa-monitor'),
-  $sslkeyfile     = hiera("${module_name}::component::monitor::sslkeyfile","${::fqdn}-monitor.crt"),
-  $options        = hiera_hash("${module_name}::component::monitor::options",{}),
-  $configfile     = hiera("${module_name}::component::monitor::configfile",'/etc/zarafa/monitor.cfg')
+  $sslcertdir     = '/etc/zarafa/ssl',
+  $serverhostname = 'localhost',
+  $ensure         = running,
+  $enable         = true,
+  $packages       = 'zarafa-monitor',
+  $sslkeyfile     = "${::fqdn}-monitor.crt",
+  $options        = {},
+  $configfile     = '/etc/zarafa/monitor.cfg'
 ) {
 
   include zarafa::augeas

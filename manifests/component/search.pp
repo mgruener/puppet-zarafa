@@ -1,12 +1,12 @@
 class zarafa::component::search (
-  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $ensure         = hiera("${module_name}::component::search::ensure",running),
-  $enable         = hiera("${module_name}::component::search::enable",true),
-  $packages       = hiera("${module_name}::component::search::packages",'zarafa-search'),
-  $sslkeyfile     = hiera("${module_name}::component::search::sslkeyfile","${::fqdn}-search.crt"),
-  $options        = hiera_hash("${module_name}::component::search::options",{}),
-  $configfile     = hiera("${module_name}::component::search::configfile",'/etc/zarafa/search.cfg')
+  $sslcertdir     = '/etc/zarafa/ssl',
+  $serverhostname = 'localhost',
+  $ensure         = running,
+  $enable         = true,
+  $packages       = 'zarafa-search',
+  $sslkeyfile     = "${::fqdn}-search.crt",
+  $options        = {},
+  $configfile     = '/etc/zarafa/search.cfg'
 ) {
 
   include zarafa::augeas

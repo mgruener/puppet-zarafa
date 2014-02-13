@@ -1,7 +1,7 @@
 class zarafa::pam_mapi (
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $packages       = hiera("${module_name}::pam_mapi::packages",'pam_mapi'),
-  $configure_pam  = hiera("${module_name}::pam_mapi::configure_pam",true)
+  $serverhostname = 'localhost',
+  $packages       = 'pam_mapi',
+  $configure_pam  = true,
 ) {
   package { $packages:
     ensure => present

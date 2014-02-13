@@ -1,10 +1,13 @@
 class zarafa::allinone (
-  $serverhostname = hiera("${module_name}::component::server::hostname",$::fqdn),
-  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
-  $sslkeydir      = hiera("${module_name}::sslkeydir",'/etc/pki/tls/private'),
-  $sslpubkeydir   = hiera("${module_name}::sslpubkeydir",'/etc/zarafa/sslkeys'),
-  $certdata       = hiera_hash("${module_name}::allinone::certdata"),
+  $certdata,
+  $serverhostname = $::fqdn,
+  $sslcertdir     = '/etc/zarafa/ssl',
+  $sslkeydir      = '/etc/pki/tls/private',
+  $sslpubkeydir   = '/etc/zarafa/sslkeys',
+  $hiera_merge    = false,
 ) {
+  $myclass = "${module_name}::allinone"
+
   include zarafa::dbhost
   include zarafa::component::client
   include zarafa::component::server
@@ -24,24 +27,34 @@ class zarafa::allinone (
   Class['zarafa::component::server'] -> Class['zarafa::component::monitor']
   Class['zarafa::component::server'] -> Class['zarafa::component::search']
 
+  if !is_hash($certdata) {
+      fail("${myclass}::certdata must be a hash.")
+  }
+
+  if $hiera_merge_real == true {
+    $certdata_real = hiera_hash("${myclass}::certdata",undef)
+  } else {
+    $certdata_real = $certdata
+  }
+
   Certtool::Cert {
     certpath        => $sslcertdir,
     keypath         => $sslkeydir,
     pubkeypath      => $sslpubkeydir,
-    organization    => $certdata[organization],
-    unit            => $certdata[unit],
-    locality        => $certdata[locality],
-    state           => $certdata[state],
-    country         => $certdata[country],
-    caname          => $certdata[caname],
-    expiration_days => $certdata[expidation_days]
+    organization    => $certdata_real[organization],
+    unit            => $certdata_real[unit],
+    locality        => $certdata_real[locality],
+    state           => $certdata_real[state],
+    country         => $certdata_real[country],
+    caname          => $certdata_real[caname],
+    expiration_days => $certdata_real[expidation_days]
   }
   
   file { [ $sslcertdir, $sslkeydir, $sslpubkeydir ]:
     ensure => directory,
   }
 
-  certtool::cert { $certdata[caname]:
+  certtool::cert { $certdata_real[caname]:
     is_ca => true,
     require => [ File[$sslcertdir], File[$sslkeydir] ]
   }

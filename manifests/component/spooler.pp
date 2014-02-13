@@ -1,12 +1,12 @@
 class zarafa::component::spooler (
-  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $ensure         = hiera("${module_name}::component::spooler::ensure",running),
-  $enable         = hiera("${module_name}::component::spooler::enable",true),
-  $packages       = hiera("${module_name}::component::spooler::packages",'zarafa-spooler'),
-  $sslkeyfile     = hiera("${module_name}::component::spooler::sslkeyfile","${::fqdn}-spooler.crt"),
-  $options        = hiera_hash("${module_name}::component::spooler::options",{}),
-  $configfile     = hiera("${module_name}::component::spooler::configfile",'/etc/zarafa/spooler.cfg')
+  $sslcertdir     = '/etc/zarafa/ssl',
+  $serverhostname = 'localhost',
+  $ensure         = running,
+  $enable         = true,
+  $packages       = 'zarafa-spooler',
+  $sslkeyfile     = "${::fqdn}-spooler.crt",
+  $options        = {},
+  $configfile     = '/etc/zarafa/spooler.cfg'
 ) {
 
   include zarafa::augeas

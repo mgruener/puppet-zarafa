@@ -1,5 +1,5 @@
 class zarafa::augeas (
-  $lensdir = hiera("${module_name}::augeas::lensdir",'/usr/share/augeas/lenses/dist')
+  $lensdir = '/usr/share/augeas/lenses/dist'
 ) {
   file { "${lensdir}/zarafa.aug":
     ensure => file,

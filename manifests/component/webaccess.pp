@@ -1,6 +1,6 @@
 class zarafa::component::webaccess (
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $packages = hiera("${module_name}::component::webaccess::packages", 'zarafa-webaccess'),
+  $serverhostname = 'localhost',
+  $packages =  'zarafa-webaccess',
 ) {
   package { $packages:
     ensure => present

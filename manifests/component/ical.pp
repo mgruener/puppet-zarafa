@@ -1,12 +1,12 @@
 class zarafa::component::ical (
-  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $ensure         = hiera("${module_name}::component::ical::ensure",running),
-  $enable         = hiera("${module_name}::component::ical::enable",true),
-  $packages       = hiera("${module_name}::component::ical::packages",'zarafa-ical'),
-  $sslkeyfile     = hiera("${module_name}::component::ical::sslkeyfile","${::fqdn}-ical.crt"),
-  $options        = hiera_hash("${module_name}::component::ical::options",{}),
-  $configfile     = hiera("${module_name}::component::ical::configfile",'/etc/zarafa/ical.cfg')
+  $sslcertdir     = '/etc/zarafa/ssl',
+  $serverhostname = 'localhost',
+  $ensure         = running,
+  $enable         = true,
+  $packages       = 'zarafa-ical',
+  $sslkeyfile     = "${::fqdn}-ical.crt",
+  $options        = {},
+  $configfile     = '/etc/zarafa/ical.cfg'
 ) {
 
   include zarafa::augeas

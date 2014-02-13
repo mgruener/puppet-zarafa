@@ -1,12 +1,12 @@
 class zarafa::component::dagent (
-  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $ensure         = hiera("${module_name}::component::dagent::ensure",running),
-  $enable         = hiera("${module_name}::component::dagent::enable",true),
-  $packages       = hiera("${module_name}::component::dagent::packages",'zarafa-dagent'),
-  $sslkeyfile     = hiera("${module_name}::component::dagent::sslkeyfile","${::fqdn}-dagent.crt"),
-  $options        = hiera_hash("${module_name}::component::dagent::options",{}),
-  $configfile     = hiera("${module_name}::component::dagent::configfile",'/etc/zarafa/dagent.cfg')
+  $sslcertdir     = '/etc/zarafa/ssl',
+  $serverhostname = 'localhost',
+  $ensure         = 'running',
+  $enable         = true,
+  $packages       = 'zarafa-dagent',
+  $sslkeyfile     = "${::fqdn}-dagent.crt",
+  $options        = {},
+  $configfile     = '/etc/zarafa/dagent.cfg',
 ) {
 
   include zarafa::augeas

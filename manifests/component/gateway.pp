@@ -1,12 +1,12 @@
 class zarafa::component::gateway (
-  $sslcertdir     = hiera("${module_name}::sslcertdir",'/etc/zarafa/ssl'),
-  $serverhostname = hiera("${module_name}::component::server::hostname",'localhost'),
-  $ensure         = hiera("${module_name}::component::gateway::ensure",running),
-  $enable         = hiera("${module_name}::component::gateway::enable",true),
-  $packages       = hiera("${module_name}::component::gateway::packages",'zarafa-gateway'),
-  $sslkeyfile     = hiera("${module_name}::component::gateway::sslkeyfile","${::fqdn}-gateway.crt"),
-  $options        = hiera_hash("${module_name}::component::gateway::options",{}),
-  $configfile     = hiera("${module_name}::component::gateway::configfile",'/etc/zarafa/gateway.cfg')
+  $sslcertdir     = '/etc/zarafa/ssl',
+  $serverhostname = 'localhost',
+  $ensure         = running,
+  $enable         = true,
+  $packages       = 'zarafa-gateway',
+  $sslkeyfile     = "${::fqdn}-gateway.crt",
+  $options        = {},
+  $configfile     = '/etc/zarafa/gateway.cfg'
 ) {
 
   include zarafa::augeas
