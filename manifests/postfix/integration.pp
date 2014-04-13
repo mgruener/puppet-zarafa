@@ -2,8 +2,8 @@ class zarafa::postfix::integration (
   $listen      = 'all',
   $dagenthost  = 'localhost:2003',
   $domains     = [ $::domain ],
-  $aliasmaps   = [ 'hash:/etc/postfix/virtual' ],
-  $mailboxmaps = [ 'hash:/etc/postfix/virtual' ],
+  $aliasmaps   = [ '/etc/postfix/virtual.alias' ],
+  $mailboxmaps = [ '/etc/postfix/virtual' ],
   $hiera_merge = false,
 ) {
   $myclass = "${module_name}::postfix::integration"
@@ -67,9 +67,17 @@ class zarafa::postfix::integration (
     value => "lmtp:${dagenthost}"
   }
   postfix::main { 'virtual_mailbox_maps':
-    value => $mailboxmaps_real
+    value => "hash:${mailboxmaps_real}"
   }
   postfix::main { 'virtual_alias_maps':
-    value => $aliasmaps_real
+    value => "hash:${aliasmaps_real}"
+  }
+
+  postfix::hash { $aliasmaps_real:
+    ensure => present
+  }
+
+  postfix::hash { $mailboxmaps_real:
+    ensure => present
   }
 }
