@@ -43,6 +43,6 @@ class zarafa::accounts (
       $users_real = $users
     }
 
-    create_resources('zarafauser',$users_real)
+    create_resources('zarafa::user',$users_real)
   }
 }
