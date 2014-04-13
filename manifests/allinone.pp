@@ -3,11 +3,29 @@ class zarafa::allinone (
   $sslcertdir     = '/etc/zarafa/ssl',
   $sslkeydir      = '/etc/pki/tls/private',
   $sslpubkeydir   = '/etc/zarafa/sslkeys',
+  $localdb        = true,
   $hiera_merge    = false,
 ) {
   $myclass = "${module_name}::allinone"
 
-  include zarafa::dbhost
+  case type($localdb) {
+    'string': {
+      validate_re($localdb, '^(true|false)$', "${myclass}::localdb may be either 'true' or 'false' and is set to <${localdb}>.")
+      $localdb_real = str2bool($localdb)
+    }
+    'boolean': {
+      $localdb_real = $localdb
+    }
+    default: {
+      fail("${myclass}::localdb type must be true or false.")
+    }
+  }
+
+  if $localdb == true {
+    include zarafa::dbhost
+    Class['zarafa::dbhost'] -> Class['zarafa::component::server']
+  }
+
   include zarafa::component::client
   include zarafa::component::server
   include zarafa::component::dagent
@@ -18,7 +36,6 @@ class zarafa::allinone (
   include zarafa::component::search
   include zarafa::component::webaccess
 
-  Class['zarafa::dbhost'] -> Class['zarafa::component::server']
   Class['zarafa::component::server'] -> Class['zarafa::component::dagent']
   Class['zarafa::component::server'] -> Class['zarafa::component::spooler']
   Class['zarafa::component::server'] -> Class['zarafa::component::gateway']
