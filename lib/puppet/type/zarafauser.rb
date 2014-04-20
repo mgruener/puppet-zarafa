@@ -44,7 +44,7 @@ Puppet::Type.newtype(:zarafauser) do
     defaultto :true
   end
 
-  newproperty(:quotaoverride, :booleand => true) do
+  newproperty(:quotaoverride, :boolean => true) do
     desc "Whether to override the system wide quota settings with values specific for this user."
 
     newvalue(:true)
