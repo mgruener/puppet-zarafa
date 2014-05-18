@@ -11,6 +11,7 @@ define zarafa::user (
   $hardquota     = undef,
   $softquota     = undef,
   $warnquota     = undef,
+  $mailalias     = undef,
 ) {
 
   zarafauser { $title:
@@ -31,5 +32,12 @@ define zarafa::user (
 
   postfix::virtual { $email:
     destination => $email,
+  }
+
+  if $mailalias {
+    postfix::virtual { $mailalias:
+      destination => $email,
+      file        => $zarafa::postfix::integration::aliasmaps[0]
+    }
   }
 }
