@@ -21,6 +21,13 @@ class zarafa::component::server (
     ensure => present
   }
 
+  @@mysql::db { $mysqldb:
+    user     => $mysqluser,
+    password => $mysqlpassword,
+    host     => $::fqdn,
+    tag      => 'zarafa_db',
+  }
+
   $server_options = { 'server_hostname' => {
                         value => $serverhostname
                       },
