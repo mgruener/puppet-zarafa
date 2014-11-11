@@ -1,6 +1,6 @@
 class zarafa::component::search (
   $sslcertdir     = '/etc/zarafa/ssl',
-  $serverhostname = 'localhost',
+  $serverhostname = $::fqdn,
   $ensure         = running,
   $enable         = true,
   $packages       = 'zarafa-search',
@@ -13,13 +13,6 @@ class zarafa::component::search (
 
   package { $packages:
     ensure => present
-  }
-
-  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
-    $zarafaserver = 'localhost'
-  }
-  else {
-    $zarafaserver = $serverhostname
   }
 
   service { 'zarafa-search':
@@ -36,7 +29,7 @@ class zarafa::component::search (
   }
 
   $search_options = { 'server_socket-search' => { option => 'server_socket',
-                                                  value => "https://${zarafaserver}:237/zarafa"
+                                                  value => "https://${serverhostname}:237/zarafa"
                       },
                       'sslkey_file-search'   => { option => 'sslkey_file',
                                                   value  => "${sslcertdir}/${sslkeyfile}"

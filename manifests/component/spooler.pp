@@ -1,6 +1,6 @@
 class zarafa::component::spooler (
   $sslcertdir     = '/etc/zarafa/ssl',
-  $serverhostname = 'localhost',
+  $serverhostname = $::fqdn,
   $ensure         = running,
   $enable         = true,
   $packages       = 'zarafa-spooler',
@@ -15,15 +15,8 @@ class zarafa::component::spooler (
     ensure => present
   }
 
-  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
-    $zarafaserver = 'localhost'
-  }
-  else {
-    $zarafaserver = $serverhostname
-  }
-
   $spooler_options = { 'server_socket-spooler' => { option => 'server_socket',
-                                                    value  => "https://${zarafaserver}:237/zarafa"
+                                                    value  => "https://${serverhostname}:237/zarafa"
                        },
                        'sslkey_file-spooler'   => { option => 'sslkey_file',
                                                     value  => "${sslcertdir}/${sslkeyfile}"

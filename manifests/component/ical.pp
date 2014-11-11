@@ -1,6 +1,6 @@
 class zarafa::component::ical (
   $sslcertdir     = '/etc/zarafa/ssl',
-  $serverhostname = 'localhost',
+  $serverhostname = $::fqdn,
   $ensure         = running,
   $enable         = true,
   $packages       = 'zarafa-ical',
@@ -15,15 +15,8 @@ class zarafa::component::ical (
     ensure => present
   }
 
-  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
-    $zarafaserver = 'localhost'
-  }
-  else {
-    $zarafaserver = $serverhostname
-  }
-
   $ical_options = { 'server_socket-ical' => { option => 'server_socket',
-                                              value => "https://${zarafaserver}:237/zarafa"
+                                              value => "https://${serverhostname}:237/zarafa"
                     },
                     'ssl_private_key_file-ical'   => { option => 'ssl_private_key_file',
                                                        value  => "${sslcertdir}/${sslkeyfile}"

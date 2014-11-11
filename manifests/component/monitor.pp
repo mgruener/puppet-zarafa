@@ -1,6 +1,6 @@
 class zarafa::component::monitor (
   $sslcertdir     = '/etc/zarafa/ssl',
-  $serverhostname = 'localhost',
+  $serverhostname = $::fqdn,
   $ensure         = running,
   $enable         = true,
   $packages       = 'zarafa-monitor',
@@ -15,15 +15,8 @@ class zarafa::component::monitor (
     ensure => present
   }
 
-  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
-    $zarafaserver = 'localhost'
-  }
-  else {
-    $zarafaserver = $serverhostname
-  }
-
   $monitor_options = { 'server_socket-monitor' => { option => 'server_socket',
-                                                    value => "https://${zarafaserver}:237/zarafa"
+                                                    value => "https://${serverhostname}:237/zarafa"
                        },
                        'sslkey_file-monitor'   => { option => 'sslkey_file',
                                                     value  => "${sslcertdir}/${sslkeyfile}"

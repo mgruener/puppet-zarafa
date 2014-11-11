@@ -1,6 +1,6 @@
 class zarafa::component::dagent (
   $sslcertdir     = '/etc/zarafa/ssl',
-  $serverhostname = 'localhost',
+  $serverhostname = $::fqdn,
   $ensure         = 'running',
   $enable         = true,
   $packages       = 'zarafa-dagent',
@@ -15,15 +15,8 @@ class zarafa::component::dagent (
     ensure => present
   }
 
-  if downcase($serverhostname) in downcase([ $::fqdn, $::hostname ]) {
-    $zarafaserver = 'localhost'
-  }
-  else {
-    $zarafaserver = $serverhostname
-  }
-
   $dagent_options = { 'server_socket-dagent' => { option => 'server_socket',
-                                                  value => "https://${zarafaserver}:237/zarafa"
+                                                  value => "https://${serverhostname}:237/zarafa"
                      },
                      'sslkey_file-dagent'    => { option => 'sslkey_file',
                                                   value  => "${sslcertdir}/${sslkeyfile}"
